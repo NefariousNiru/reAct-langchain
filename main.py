@@ -1,6 +1,6 @@
 import os
 from typing import List
-
+from callbacks import AgentCallbackHandler
 from dotenv import load_dotenv
 from langchain.agents.format_scratchpad import format_log_to_str
 from langchain.agents.output_parsers import ReActSingleInputOutputParser
@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     intermediate_steps = []
 
-    llm = ChatOpenAI(temperature=0, model=os.environ["MODEL"], stop_sequences=["\nObservation"])
+    llm = ChatOpenAI(temperature=0, model=os.environ["MODEL"], stop_sequences=["\nObservation"], callbacks=[AgentCallbackHandler()])
     agent = {
                 "input": lambda x: x["input"],
                 "agent_scratchpad": lambda x: format_log_to_str(x["agent_scratchpad"])
